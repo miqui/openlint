@@ -3,7 +3,7 @@
 ## Prerequisites
 
 * Install the project dependencies with `yarn`
-* Generate the binary for your platform with `yarn workspace @stoplight/spectral-cli build.binary`. This will *also* compile the project from TS -> JS
+* Generate the binary for your platform with `yarn workspace @openlint/openlint-cli build.binary`. This will *also* compile the project from TS -> JS
 
 ## Running the suite
 
@@ -105,7 +105,7 @@ assets real-life example
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Stoplight
+  title: OpenLint
 paths: {}
 ====asset:ruleset====
 extends: spectral:oas

@@ -1,21 +1,21 @@
-# Spectral in JavaScript
+# OpenLint in JavaScript
 
-The Spectral CLI is a thin wrapper around a JavaScript (TypeScript) API, which can be used independently to do all the same things outside of the CLI, such as linting YAML and JSON documents from a string or an object.
+The OpenLint CLI is a thin wrapper around a JavaScript (TypeScript) API, which can be used independently to do all the same things outside of the CLI, such as linting YAML and JSON documents from a string or an object.
 
 ## Prerequisites
 
-To use the Spectral JS API, you need to install the appropriate package.
+To use the OpenLint JS API, you need to install the appropriate package.
 
 For npm users:
 
 ```bash
-npm install -g @stoplight/spectral-core
+npm install -g @openlint/openlint-core
 ```
 
 For Yarn users:
 
 ```bash
-yarn global add @stoplight/spectral-core
+yarn global add @openlint/openlint-core
 ```
 
 ## Get Started
@@ -28,10 +28,10 @@ Similar to using Spectral in the CLI, there are two things you'll need to run Sp
 As an example, here's a script of Spectral in action:
 
 ```js title="example-1.mjs" lineNumbers
-import spectralCore from "@stoplight/spectral-core";
-const { Spectral, Document } = spectralCore;
-import Parsers from "@stoplight/spectral-parsers"; // make sure to install the package if you intend to use default parsers!
-import { truthy } from "@stoplight/spectral-functions"; // this has to be installed as well
+import openLintCore from "@openlint/openlint-core";
+const { OpenLint, Document } = openLintCore;
+import Parsers from "@openlint/openlint-parsers"; // make sure to install the package if you intend to use default parsers!
+import { truthy } from "@openlint/openlint-functions"; // this has to be installed as well
 
 // this will be our API specification document
 const myDocument = new Document(
@@ -43,8 +43,8 @@ responses:
   "/my-file",
 );
 
-const spectral = new Spectral();
-spectral.setRuleset({
+const openlint = new OpenLint();
+openlint.setRuleset({
   // this will be our ruleset
   rules: {
     "no-empty-description": {
@@ -58,7 +58,7 @@ spectral.setRuleset({
 });
 
 // we lint our document using the ruleset we passed to the Spectral object
-spectral.run(myDocument).then(console.log);
+openlint.run(myDocument).then(console.log);
 ```
 
 ## Load Rulesets and API Specification Files
@@ -70,7 +70,7 @@ Let's look at some other examples and how to work with external files.
 If you would like to run this example, make sure that you have:
 
 - An OpenAPI description document in the same directory as your script named `openapi.yaml`. You can use [this OpenAPI description for the Plaid API](https://github.com/stoplightio/Public-APIs/blob/master/reference/plaid/openapi.yaml).
-- A ruleset file named `.spectral.yaml`. It can have the following contents:
+- A ruleset file named `.openlint.yaml` (or `.spectral.yaml`). It can have the following contents:
 
 ```yaml
 extends:
@@ -84,12 +84,12 @@ import * as fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import * as path from "node:path";
 import { join } from "path";
-import { bundleAndLoadRuleset } from "@stoplight/spectral-ruleset-bundler/with-loader";
-import Parsers from "@stoplight/spectral-parsers"; // make sure to install the package if you intend to use default parsers!
-import spectralCore from "@stoplight/spectral-core";
-const { Spectral, Document } = spectralCore;
-import spectralRuntime from "@stoplight/spectral-runtime";
-const { fetch } = spectralRuntime;
+import { bundleAndLoadRuleset } from "@openlint/openlint-ruleset-bundler/with-loader";
+import Parsers from "@openlint/openlint-parsers"; // make sure to install the package if you intend to use default parsers!
+import openLintCore from "@openlint/openlint-core";
+const { OpenLint, Document } = openLintCore;
+import openLintRuntime from "@openlint/openlint-runtime";
+const { fetch } = openLintRuntime;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -100,26 +100,26 @@ const myDocument = new Document(
   "openapi.yaml",
 );
 
-const spectral = new Spectral();
+const openlint = new OpenLint();
 // load a ruleset file from your project's root directory.
-const rulesetFilepath = path.join(__dirname, ".spectral.yaml");
-spectral.setRuleset(await bundleAndLoadRuleset(rulesetFilepath, { fs, fetch }));
+const rulesetFilepath = path.join(__dirname, ".openlint.yaml");
+openlint.setRuleset(await bundleAndLoadRuleset(rulesetFilepath, { fs, fetch }));
 
-spectral.run(myDocument).then(console.log);
+openlint.run(myDocument).then(console.log);
 ```
 
 ### Load a JavaScript Ruleset
 
-Starting in Spectral v6.0, support was added for [rulesets to be written using JavaScript](./4-custom-rulesets.md#alternative-js-ruleset-format).
+OpenLint Rulesets can be [written using JavaScript](./4-custom-rulesets.md#alternative-js-ruleset-format).
 
-To load a JavaScript ruleset, you have to import it similar to how you would import a module:
+To load a JavaScript ruleset, import it similar to how you would import a module:
 
 ```js lineNumbers
-import { Spectral } from "@stoplight/spectral-core";
+import { OpenLint } from "@openlint/openlint-core";
 import ruleset from "./my-javascript-ruleset";
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openlint = new OpenLint();
+openlint.setRuleset(ruleset);
 ```
 
 ### Extend a Built-in Ruleset
@@ -128,15 +128,15 @@ You can also pass a ruleset object directly to `setRuleset` and extend one of
 the published rulesets (`oas`, `asyncapi`, or `arazzo`):
 
 ```ts lineNumbers
-import { Spectral, type RulesetDefinition } from "@stoplight/spectral-core";
-import { oas } from "@stoplight/spectral-rulesets";
+import { OpenLint, type RulesetDefinition } from "@openlint/openlint-core";
+import { oas } from "@openlint/openlint-rulesets";
 
 const ruleset: RulesetDefinition = {
   extends: [oas],
 };
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openlint = new OpenLint();
+openlint.setRuleset(ruleset);
 ```
 
 `oas` is an actual ruleset object rather than a ruleset name, so this works
@@ -148,8 +148,8 @@ without the YAML loading or bundling path. The same pattern works for
 Here's an example script of how you could run Spectral in the browser:
 
 ```js title="example-3.mjs" lineNumbers
-import { Spectral } from "@stoplight/spectral-core";
-import { bundleAndLoadRuleset } from "@stoplight/spectral-ruleset-bundler/with-loader";
+import { OpenLint } from "@openlint/openlint-core";
+import { bundleAndLoadRuleset } from "@openlint/openlint-ruleset-bundler/with-loader";
 
 // create a ruleset that extends the spectral:oas ruleset
 const myRuleset = `extends: spectral:oas
@@ -159,7 +159,7 @@ rules: {}`;
 const fs = {
   promises: {
     async readFile(filepath) {
-      if (filepath === "/.spectral.yaml") {
+      if (filepath === "/.openlint.yaml") {
         return myRuleset;
       }
 
@@ -168,13 +168,13 @@ const fs = {
   },
 };
 
-const spectral = new Spectral();
-s.setRuleset(await bundleAndLoadRuleset("/.spectral.yaml", { fs, fetch }));
+const openlint = new OpenLint();
+openlint.setRuleset(await bundleAndLoadRuleset("/.openlint.yaml", { fs, fetch }));
 ```
 
 ### Load Multiple Rulesets
 
-If you'd like to use the `bundleAndLoadRuleset` method to load multiple rulesets, you'll have to create a new Spectral ruleset file, and use the [`extends`](../getting-started/3-rulesets.md#extending-rulesets) functionality to extend the rulesets you'd like to use.
+If you'd like to use the `bundleAndLoadRuleset` method to load multiple rulesets, you'll have to create a new ruleset file, and use the [`extends`](../getting-started/3-rulesets.md#extending-rulesets) functionality to extend the rulesets you'd like to use.
 
 ## Advanced
 
@@ -183,12 +183,12 @@ If you'd like to use the `bundleAndLoadRuleset` method to load multiple rulesets
 Spectral supports HTTP(S) proxies when fetching remote assets:
 
 ```js title="example-4.mjs" lineNumbers
-import { Spectral } from "@stoplight/spectral-core";
+import { OpenLint } from "@openlint/openlint-core";
 import ProxyAgent from "proxy-agent";
-import { createHttpAndFileResolver } from "@stoplight/spectral-ref-resolver";
+import { createHttpAndFileResolver } from "@openlint/openlint-ref-resolver";
 
-// start Spectral using a proxy
-const spectral = new Spectral({
+// start OpenLint using a proxy
+const openlint = new OpenLint({
   resolver: createHttpAndFileResolver({ agent: new ProxyAgent(process.env.PROXY) }),
 });
 
@@ -199,15 +199,14 @@ const spectral = new Spectral({
 
 ### How to Use a Custom Resolver
 
-Spectral lets you provide any custom \$ref resolver. By default, HTTP(S) and file protocols are resolved, relatively to
-the document Spectral lints against. You can also add support for additional protocols, or adjust the resolution. To achieve that, you need to create a custom json-ref-resolver instance.
+OpenLint lets you provide any custom `$ref` resolver. By default, HTTP(S) and file protocols are resolved, relatively to the document OpenLint lints against. You can also add support for additional protocols, or adjust the resolution. To achieve that, you need to create a custom json-ref-resolver instance.
 
 For example:
 
 ```js title="example-5.cjs" lineNumbers
 const path = require("path");
 const fs = require("fs");
-const { Spectral } = require("@stoplight/spectral-cli");
+const { OpenLint } = require("@openlint/openlint-core");
 const { Resolver } = require("@stoplight/json-ref-resolver");
 
 const customFileResolver = new Resolver({
@@ -230,7 +229,7 @@ const customFileResolver = new Resolver({
   },
 });
 
-const spectral = new Spectral({ resolver: customFileResolver });
+const openlint = new OpenLint({ resolver: customFileResolver });
 
 // ... load document
 

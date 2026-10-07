@@ -3,15 +3,15 @@ import * as path from '@stoplight/path';
 import { format as prettierFormat } from 'prettier/standalone';
 import * as parserBabel from 'prettier/plugins/babel';
 import * as parserEstree from 'prettier/plugins/estree';
-import { Ruleset } from '@stoplight/spectral-core';
+import { Ruleset } from '@openlint/openlint-core';
 import { DiagnosticSeverity } from '@stoplight/types';
 import fetchMockLib, { FetchMock as FetchMockInstance } from 'fetch-mock';
-import { serveAssets } from '@stoplight/spectral-test-utils';
+import { serveAssets } from '@openlint/openlint-test-utils';
 
 import { migrateRuleset } from '..';
 import fixtures from './__fixtures__/.cache/index.json';
 
-const cwd = '/.tmp/spectral';
+const cwd = '/.tmp/openlint';
 
 vol.fromJSON(fixtures, cwd);
 
@@ -94,10 +94,10 @@ describe('migrator', () => {
       }),
     )(_module, (id: string): unknown => {
       switch (id) {
-        case '@stoplight/spectral-functions':
-          return require('@stoplight/spectral-functions') as unknown;
-        case '@stoplight/spectral-rulesets':
-          return require('@stoplight/spectral-rulesets') as unknown;
+        case '@openlint/openlint-functions':
+          return require('@openlint/openlint-functions') as unknown;
+        case '@openlint/openlint-rulesets':
+          return require('@openlint/openlint-rulesets') as unknown;
         default:
           throw new ReferenceError(`${id} not found`);
       }
@@ -106,7 +106,7 @@ describe('migrator', () => {
     const ruleset = new Ruleset(_module.exports);
 
     expect(Object.keys(ruleset.rules)).toEqual([
-      ...Object.keys(require('@stoplight/spectral-rulesets').oas.rules),
+      ...Object.keys(require('@openlint/openlint-rulesets').oas.rules),
       'valid-type',
     ]);
 
@@ -119,14 +119,14 @@ describe('migrator', () => {
     await vol.promises.writeFile(
       path.join(cwd, 'ruleset.json'),
       JSON.stringify({
-        extends: ['https://spectral.stoplight.io/ruleset'],
+        extends: ['https://mock.openlint.org/ruleset'],
         rules: {
           'valid-type': 'error',
         },
       }),
     );
 
-    fetch.get('https://spectral.stoplight.io/ruleset', {
+    fetch.get('https://mock.openlint.org/ruleset', {
       body: {
         rules: {
           'valid-type': {
@@ -173,7 +173,7 @@ describe('migrator', () => {
         format: 'esm',
         fs: vol as any,
       }),
-    ).resolves.toEqual(`import {jsonSchemaDraft2} from "@stoplight/spectral-formats";
+    ).resolves.toEqual(`import {jsonSchemaDraft2} from "@openlint/openlint-formats";
 export default {
   "formats": [jsonSchemaDraft2]
 };
@@ -182,13 +182,13 @@ export default {
 
   it('should follow links correctly', async () => {
     serveAssets({
-      'http://domain/bitbucket/projects/API/repos/spectral-rules/raw/.spectral.yml?at=refs%2Fheads%2Fmaster': {
+      'http://domain/bitbucket/projects/API/repos/openlint-rules/raw/.spectral.yml?at=refs%2Fheads%2Fmaster': {
         extends: ['spectral:oas', 'oas-rules.yml'],
         rules: {
           'valid-type': 'error',
         },
       },
-      'http://domain/bitbucket/projects/API/repos/spectral-rules/raw/oas-rules.yml': {
+      'http://domain/bitbucket/projects/API/repos/openlint-rules/raw/oas-rules.yml': {
         rules: {
           'valid-type': {
             given: '$',
@@ -204,7 +204,7 @@ export default {
       path.join(cwd, 'ruleset.json'),
       JSON.stringify({
         extends: [
-          'http://domain/bitbucket/projects/API/repos/spectral-rules/raw/.spectral.yml?at=refs%2Fheads%2Fmaster',
+          'http://domain/bitbucket/projects/API/repos/openlint-rules/raw/.spectral.yml?at=refs%2Fheads%2Fmaster',
         ],
       }),
     );
@@ -214,7 +214,7 @@ export default {
         format: 'esm',
         fs: vol as any,
       }),
-    ).toEqual(`import {oas} from "@stoplight/spectral-rulesets";
+    ).toEqual(`import {oas} from "@openlint/openlint-rulesets";
 export default {
   "extends": [{
     "extends": [oas, {
@@ -241,11 +241,11 @@ export default {
     await vol.promises.writeFile(
       path.join(cwd, 'ruleset.json'),
       JSON.stringify({
-        extends: ['https://spectral.stoplight.io/ruleset'],
+        extends: ['https://mock.openlint.org/ruleset'],
       }),
     );
 
-    fetch.get('https://spectral.stoplight.io/ruleset', {
+    fetch.get('https://mock.openlint.org/ruleset', {
       body: `export default { rules: {} }`,
       headers: {
         'Content-Type': 'application/javascript; charset=utf-8',
@@ -258,7 +258,7 @@ export default {
         fs: vol as any,
         fetch,
       }),
-    ).toEqual(`import ruleset_ from "https://spectral.stoplight.io/ruleset";
+    ).toEqual(`import ruleset_ from "https://mock.openlint.org/ruleset";
 export default {
   "extends": [ruleset_]
 };
@@ -301,8 +301,8 @@ export default {
           fs: vol as any,
           npmRegistry: 'https://unpkg.com/',
         }),
-      ).toEqual(`import {oas2} from "https://unpkg.com/@stoplight/spectral-formats";
-import {truthy} from "https://unpkg.com/@stoplight/spectral-functions";
+      ).toEqual(`import {oas2} from "https://unpkg.com/@openlint/openlint-formats";
+import {truthy} from "https://unpkg.com/@openlint/openlint-functions";
 import test from "https://unpkg.com/custom-npm-ruleset/functions/test.js";
 export default {
   "extends": [{
@@ -349,7 +349,7 @@ export default {
           fs: vol as any,
           npmRegistry: 'https://unpkg.com/',
         }),
-      ).toEqual(`import customFunction from "/.tmp/spectral/functions/customFunction.js";
+      ).toEqual(`import customFunction from "/.tmp/openlint/functions/customFunction.js";
 export default {
   "rules": {
     "rule": {

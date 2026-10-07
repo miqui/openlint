@@ -4,7 +4,7 @@ Invalid document outputs results --format=json
 ---
 info:
   version: 1.0.0
-  title: Stoplight
+  title: OpenLint
 ====asset:ruleset.json====
 {
   "rules": {
@@ -67,7 +67,7 @@ info:
 			},
 			"end": {
 				"line": 3,
-				"character": 18
+				"character": 17
 			}
 		},
 		"source": "{document}",
@@ -87,7 +87,7 @@ info:
 			},
 			"end": {
 				"line": 3,
-				"character": 18
+				"character": 17
 			}
 		},
 		"source": "{document}"
@@ -106,7 +106,7 @@ info:
 			},
 			"end": {
 				"line": 3,
-				"character": 18
+				"character": 17
 			}
 		},
 		"source": "{document}",

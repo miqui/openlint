@@ -1,4 +1,4 @@
-import '@stoplight/spectral-test-utils/matchers';
+import '@openlint/openlint-test-utils/matchers';
 
 import { assertValidRuleset, RulesetValidationError } from '../index';
 import AggregateError = require('es-aggregate-error');
@@ -114,7 +114,7 @@ describe('JS Ruleset Validation', () => {
   it('recognizes valid documentationUrl', () => {
     expect(
       assertValidRuleset.bind(null, {
-        documentationUrl: 'https://stoplight.io/p/docs/gh/stoplightio/spectral/docs/reference/openapi-rules.md',
+        documentationUrl: 'https://openlint.org/docs/reference/openapi-rules.md',
         rules: {},
       }),
     ).not.toThrow();
@@ -123,7 +123,7 @@ describe('JS Ruleset Validation', () => {
       assertValidRuleset.bind(null, {
         rules: {
           rule: {
-            documentationUrl: 'https://stoplight.io/p/docs/gh/stoplightio/spectral/docs/reference/openapi-rules.md',
+            documentationUrl: 'https://openlint.org/docs/reference/openapi-rules.md',
             given: '$',
             then: {
               function: truthy,

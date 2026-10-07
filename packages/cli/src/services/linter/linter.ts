@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import { Document, IRuleResult, Ruleset, Spectral } from '@stoplight/spectral-core';
-import { readParsable, IFileReadOptions } from '@stoplight/spectral-runtime';
-import * as Parsers from '@stoplight/spectral-parsers';
+import { Document, IRuleResult, Ruleset, OpenLint } from '@openlint/openlint-core';
+import { readParsable, IFileReadOptions } from '@openlint/openlint-runtime';
+import * as Parsers from '@openlint/openlint-parsers';
 import { getRuleset, listFiles, segregateEntriesPerKind, readFileDescriptor } from './utils';
 import { getResolver } from './utils/getResolver';
 import { ILintConfig } from '../config';
@@ -13,13 +13,13 @@ export interface LinterResult {
 }
 
 export async function lint(documents: Array<number | string>, flags: ILintConfig): Promise<LinterResult> {
-  const spectral = new Spectral({
+  const openlint = new OpenLint({
     resolver: getResolver(flags.resolver),
   });
 
   const ruleset = await getRuleset(flags.ruleset);
 
-  spectral.setRuleset(ruleset);
+  openlint.setRuleset(ruleset);
   if (flags.verbose === true) {
     const rules = Object.values(ruleset.rules);
     console.info(`Found ${rules.length} rules (${rules.filter(rule => rule.enabled).length} enabled)`);
@@ -52,7 +52,7 @@ export async function lint(documents: Array<number | string>, flags: ILintConfig
     const document = await createDocument(targetUri, { encoding: flags.encoding }, flags.stdinFilepath ?? '<STDIN>');
 
     results.push(
-      ...(await spectral.run(document, {
+      ...(await openlint.run(document, {
         ignoreUnknownFormat: flags.ignoreUnknownFormat,
       })),
     );

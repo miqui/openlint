@@ -1,4 +1,4 @@
-import { applyReplacements, spawnNode, normalizeLineEndings } from '@stoplight/spectral-test-harness';
+import { applyReplacements, spawnNode, normalizeLineEndings } from '@openlint/openlint-test-harness';
 import { test, expect } from '@jest/globals';
 import escapeRegExp from 'lodash/escapeRegExp';
 import type { IScenarioFile } from './parser';
@@ -35,7 +35,7 @@ if (scenario.command === null) {
       },
     });
 
-    const stripSpectralVersionFromSarif = (str: string): string => {
+    const stripOpenLintVersionFromSarif = (str: string): string => {
       try {
         const parsed = JSON.parse(str);
         if (parsed?.$schema?.includes('sarif')) {
@@ -63,8 +63,8 @@ if (scenario.command === null) {
       let expected = normalizeLineEndings(applyReplacements(stdout, env));
 
       if (/--format=sarif\b/i.test(scenario.command ?? '')) {
-        actual = stripSpectralVersionFromSarif(actual);
-        expected = stripSpectralVersionFromSarif(expected);
+        actual = stripOpenLintVersionFromSarif(actual);
+        expected = stripOpenLintVersionFromSarif(expected);
       }
 
       expect(actual).toEqual(expected);
