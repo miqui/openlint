@@ -13,12 +13,7 @@ type OAuth2Security = {
   authorizationCode?: Scopes;
 };
 
-const OAuth2Keys = [
-  'implicit',
-  'password',
-  'clientCredentials',
-  'authorizationCode',
-] as const satisfies readonly (keyof OAuth2Security)[];
+const OAuth2Keys: (keyof OAuth2Security)[] = ['implicit', 'password', 'clientCredentials', 'authorizationCode'];
 function getAllScopes(oauth2: OAuth2Security): string[] {
   const scopes: string[] = [];
   OAuth2Keys.forEach(key => {
