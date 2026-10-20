@@ -61,7 +61,7 @@ info:
     {
       "tool": {
         "driver": {
-          "name": "spectral",
+          "name": "openlint",
           "rules": [
             {
               "id": "api-servers",

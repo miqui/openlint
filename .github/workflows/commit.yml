@@ -22,6 +22,7 @@ jobs:
       id: node
       run: echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
   test-node:
+    name: test-node (${{ matrix.node_alias }})
     needs: read-node-version
     runs-on: ubuntu-latest
     container:
@@ -29,10 +30,13 @@ jobs:
       options: --user root
     strategy:
       matrix:
-        node-version:
-        - '22.23.3'
-        - "${{ needs.read-node-version.outputs.version }}"
-        - '26.11.1'
+        include:
+        - node-version: '22.23.3'
+          node_alias: node-22
+        - node-version: "${{ needs.read-node-version.outputs.version }}"
+          node_alias: current
+        - node-version: '26.11.1'
+          node_alias: node-26
     steps:
     - name: Checkout code
       uses: actions/checkout@v7.0.1
