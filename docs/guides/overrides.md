@@ -1,4 +1,6 @@
-## Overrides
+---
+title: "Overrides"
+---
 
 Previously Spectral supported exceptions, which were limited in their ability to target particular rules on specific files or parts of files or change parts of a rule. Overrides are the much more powerful version of exceptions, with the ability to customize ruleset usage for different files and projects without having to duplicate any rules.
 
@@ -130,12 +132,12 @@ No results with a severity of 'error' or higher found!
 
 #### Extended Rulesets (extends)
 
-Overrides aren't supported in other files through [extended rulesets (`extends`)](4b-extends.md). For example, if you create a ruleset file (`rulesetA`) that includes another file (`rulesetB`) through `extends`, overrides are ignored if you apply them to `rulesetB`.
+Overrides aren't supported in other files through [extended rulesets (`extends`)](extends.md). For example, if you create a ruleset file (`rulesetA`) that includes another file (`rulesetB`) through `extends`, overrides are ignored if you apply them to `rulesetB`.
 
 However, you can use JS rulesets to inherit overrides. This example shows how to apply an override in `rulesetB`:
 
-```JavaScript
-import rulesetA from './ruleset';
+```javascript
+import rulesetA from "./ruleset";
 
 export default {
   extends: rulesetA,
