@@ -1,6 +1,6 @@
 {
   "name": "openlint",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/openlint/openlint",
   "bugs": "https://github.com/openlint/openlint/issues",
   "author": "OpenLint <info@openlint.org>",
@@ -34,7 +34,7 @@
   "dependencies": {
     "@openlint/openlint-core": "0.0.1",
     "@openlint/openlint-formatters": "0.0.1",
-    "@openlint/openlint-parsers": "^1.0.0",
+    "@openlint/openlint-parsers": "0.0.1",
     "@openlint/openlint-ref-resolver": "0.0.1",
     "@openlint/openlint-ruleset-bundler": "0.0.1",
     "@openlint/openlint-ruleset-migrator": "0.0.1",
