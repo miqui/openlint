@@ -1,5 +1,7 @@
 name: Release
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       dry-run:
@@ -10,6 +12,10 @@ on:
 
 permissions:
   contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
   # Call the commit workflow to run all tests and linting
@@ -62,6 +68,6 @@ jobs:
     - name: Build
       run: yarn build
     - name: Release
-      run: yarn release
+      run: yarn release ${{ inputs.dry-run && '--dry-run' || '' }}
       env:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}

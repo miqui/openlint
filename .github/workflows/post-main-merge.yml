@@ -1,9 +1,0 @@
-name: Post-merge to main workflow
-on:
-  push:
-    branches: [main]
-
-jobs:
-  run-commit-workflow:
-    name: Commit
-    uses: ./.github/workflows/commit.yml
