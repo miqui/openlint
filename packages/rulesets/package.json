@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@asyncapi/specs": "6.11.1",
-    "@openlint/openlint-core": "^1.23.0",
+    "@openlint/openlint-core": "0.0.1",
     "@openlint/openlint-formats": "^1.8.1",
     "@openlint/openlint-functions": "^1.9.1",
     "@openlint/openlint-runtime": "^1.1.2",

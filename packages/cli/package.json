@@ -34,7 +34,7 @@
     "cli:debug": "node -r ts-node/register/transpile-only -r tsconfig-paths/register --inspect-brk src/index.ts"
   },
   "dependencies": {
-    "@openlint/openlint-core": "^1.19.5",
+    "@openlint/openlint-core": "0.0.1",
     "@openlint/openlint-formatters": "^1.4.1",
     "@openlint/openlint-parsers": "^1.0.4",
     "@openlint/openlint-ref-resolver": "^1.0.4",

@@ -35,7 +35,7 @@
     "url": "https://github.com/openlint/openlint.git"
   },
   "dependencies": {
-    "@openlint/openlint-core": ">=1",
+    "@openlint/openlint-core": "0.0.1",
     "@openlint/openlint-formats": "^1.8.1",
     "@openlint/openlint-functions": ">=1",
     "@openlint/openlint-parsers": ">=1",

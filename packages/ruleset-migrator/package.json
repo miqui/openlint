@@ -37,7 +37,7 @@
     "validate-npm-package-name": "3.0.0"
   },
   "devDependencies": {
-    "@openlint/openlint-core": "*",
+    "@openlint/openlint-core": "0.0.1",
     "@openlint/openlint-rulesets": "*",
     "fetch-mock": "^12.6.0",
     "json-schema-to-typescript": "^10.1.5",

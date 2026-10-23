@@ -19,7 +19,7 @@
     "node": "^22.0 || >= 24.0"
   },
   "dependencies": {
-    "@openlint/openlint-core": "^1.23.0",
+    "@openlint/openlint-core": "0.0.1",
     "@openlint/openlint-formats": "^1.8.1",
     "@openlint/openlint-runtime": "^1.1.2",
     "@stoplight/better-ajv-errors": "1.0.3",
