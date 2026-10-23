@@ -28,13 +28,13 @@
 The easiest way to install OpenLint is to use either [npm](https://www.npmjs.com/):
 
 ```bash
-npm install -g @openlint/openlint-cli
+npm install -g openlint
 ```
 
 Or [yarn](https://yarnpkg.com/):
 
 ```
-yarn global add @openlint/openlint-cli
+yarn global add openlint
 ```
 
 There are also [additional installation options](https://docs.openlint.org/getting-started/installation).

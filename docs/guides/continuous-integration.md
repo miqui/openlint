@@ -27,7 +27,7 @@ jobs:
       - run: "[ -d lint-results ] || mkdir lint-results"
       - run:
           name: Run Spectral Lint
-          command: npx @openlint/openlint-cli lint openapi.yaml
+          command: npx openlint lint openapi.yaml
             -o lint-results/junit.xml
             -f junit
       - store_test_results:
