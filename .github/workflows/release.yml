@@ -37,12 +37,21 @@ jobs:
     needs:
     - run-tests
     - read-node-version
+    permissions:
+      contents: read
+      id-token: write
     steps:
+    - name: Generate GitHub App token
+      id: app-token
+      uses: actions/create-github-app-token@v2
+      with:
+        app-id: ${{ vars.RELEASE_APP_ID }}
+        private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
     - name: Checkout code
       uses: actions/checkout@v7.0.1
       with:
         fetch-depth: 0
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ steps.app-token.outputs.token }}
     - name: Configure Git
       run: |
         git config --global --add safe.directory /__w/openlint/openlint
@@ -50,14 +59,9 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
     - name: Cached dependencies
       uses: "./.github/actions/cached-dependencies"
-    - name: Set up NPM auth
-      run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Build
       run: yarn build
     - name: Release
       run: yarn release
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GH_TOKEN: ${{ steps.app-token.outputs.token }}
