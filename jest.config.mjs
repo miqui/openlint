@@ -29,7 +29,7 @@ export default {
     {
       ...projectDefault,
       displayName: {
-        name: '@openlint/openlint-cli',
+        name: 'openlint',
         color: 'greenBright',
       },
       testMatch: ['<rootDir>/packages/cli/src/**/__tests__/**/*.{test,spec}.ts'],

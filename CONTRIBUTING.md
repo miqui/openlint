@@ -157,7 +157,7 @@ Running the harness tests (these must pass or the PR merge will be blocked):
 
 ```bash
 # make sure to build the code beforehand if you haven't done it. To do so execute
-yarn build && yarn workspace @openlint/openlint-cli build.binary
+yarn build && yarn workspace openlint build.binary
 
 # then
 yarn test.harness
@@ -172,7 +172,7 @@ yarn test.harness
 5. Build OpenLint: `yarn build`
 6. Run OpenLint from your local installation: `node ./packages/cli/dist/index.js lint [openapi_spec_file] --ruleset /path/to/ruleset.yaml`
 7. Create a new branch for your work: `git checkout -b [name_of_your_new_branch]`
-8. Make changes, add tests, and then run the tests: `yarn test` and `yarn workspace @openlint/openlint-cli build.binary && yarn test.harness`
+8. Make changes, add tests, and then run the tests: `yarn test` and `yarn workspace openlint build.binary && yarn test.harness`
 9. Update the documentation if appropriate. For example, if you added a new rule to an OpenAPI ruleset,
    add a description of the rule in `docs/reference/openapi-rules.md`.
 
