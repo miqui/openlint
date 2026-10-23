@@ -1,13 +1,14 @@
 {
   "name": "@openlint/openlint-core",
-  "version": "1.24.0",
+  "version": "0.0.1",
   "sideEffects": false,
-  "homepage": "https://github.com/openlint/openlint-core",
-  "bugs": "https://github.com/openlint/openlint-core/issues",
+  "homepage": "https://github.com/openlint/openlint",
+  "bugs": "https://github.com/openlint/openlint/issues",
   "author": "OpenLint <support@stoplight.io>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openlint/openlint-core"
+    "url": "https://github.com/openlint/openlint.git",
+    "directory": "packages/core"
   },
   "license": "Apache-2.0",
   "files": [
