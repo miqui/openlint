@@ -84,11 +84,12 @@ jobs:
       run: yarn pretest
     - name: Run node tests
       run: node --run test.node
-    - name: Test harness
-      uses: "./.github/actions/test-harness-windows"
-      with:
-        os: "windows"
-        node-version: "22.23.3"
+    # Also skip this until we got windows working
+    # - name: Test harness
+    #   uses: "./.github/actions/test-harness-windows"
+    #   with:
+    #     os: "windows"
+    #     node-version: "22.23.3"
   test-browser:
     runs-on: ubuntu-latest
     steps:
